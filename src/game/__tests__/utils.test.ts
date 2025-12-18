@@ -118,32 +118,32 @@ describe('utils', () => {
         {
           gameMode: GameMode.EOP,
           numPlayers: 2,
-          expectedCardsPerHand: CARD_LIMIT,
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
         {
           gameMode: GameMode.EOP,
           numPlayers: 3,
-          expectedCardsPerHand: 26, // EoP has 6x13=78 cards. So, each player has floor(78/3)=26 cards
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
         {
           gameMode: GameMode.EOP,
           numPlayers: 4,
-          expectedCardsPerHand: 19, // EoP has 6x13=78 cards. So, each player has floor(78/4)=19 cards
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
           numPlayers: 2,
-          expectedCardsPerHand: CARD_LIMIT,
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
           numPlayers: 3,
-          expectedCardsPerHand: 26, // Cornucopia has 6x13=78 cards. So, each player has floor(78/3)=26 cards
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
           numPlayers: 4,
-          expectedCardsPerHand: 19, // Cornucopia has 6x13=78 cards. So, each player has floor(78/4)=19 cards
+          expectedCardsPerHand: 78, // Every player gets all cards
         },
       ].forEach(({ gameMode, numPlayers, expectedCardsPerHand }) => {
         const deck = getAllCards(gameMode);
@@ -158,11 +158,12 @@ describe('utils', () => {
           expect(shuffledCards[1].length).toEqual(expectedCardsPerHand);
         });
 
-        it(`should contain the starting card in any hand for ${numPlayers} players for ${gameMode} (seed=${seed})`, () => {
+        it(`should contain the starting card in every hand for ${numPlayers} players for ${gameMode} (seed=${seed})`, () => {
           const shuffledCards = shuffleCards(ctx, deck, startingCard);
 
+          // Every player should have the starting card
           expect(
-            shuffledCards.some((cards) => cards.includes(startingCard)),
+            shuffledCards.every((cards) => cards.includes(startingCard)),
           ).toBeTruthy();
         });
       });

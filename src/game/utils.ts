@@ -65,32 +65,14 @@ export function shuffleCards(
   deck: Card[],
   startingCard: Card,
 ): Card[][] {
-  const numberCardsPerHand = Math.min(
-    Math.floor(deck.length / ctx.numPlayers),
-    CARD_LIMIT,
-  );
-  const numberCardsToDeal = ctx.numPlayers * numberCardsPerHand;
+  // Give every player all cards from the deck
+  const handsPerPlayer: Card[][] = [];
 
-  const shuffledDeck = ctx.random.Shuffle<Card>(deck);
-  let choppedDeck = shuffledDeck.slice(0, numberCardsToDeal);
-  if (!choppedDeck.includes(startingCard)) {
-    choppedDeck[0] = startingCard;
-    choppedDeck = ctx.random.Shuffle<Card>(choppedDeck);
+  for (let i = 0; i < ctx.numPlayers; i++) {
+    // Each player gets a shuffled copy of the entire deck
+    const playerDeck = ctx.random.Shuffle<Card>([...deck]);
+    handsPerPlayer.push(playerDeck);
   }
-
-  // partition deck into player hands
-  const handsPerPlayer = choppedDeck.reduce(
-    (resultingArray: Card[][], item: Card, index: number) => {
-      const playerIndex = Math.floor(index / numberCardsPerHand);
-
-      resultingArray[playerIndex] = ([] as Card[]).concat(
-        resultingArray[playerIndex] ?? [],
-        item,
-      );
-      return resultingArray;
-    },
-    [],
-  );
 
   return handsPerPlayer;
 }
