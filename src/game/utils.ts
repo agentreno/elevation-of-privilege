@@ -65,12 +65,12 @@ export function shuffleCards(
   deck: Card[],
   startingCard: Card,
 ): Card[][] {
-  // Give every player all cards from the deck
+  // Give every player all cards from the deck in order
   const handsPerPlayer: Card[][] = [];
 
   for (let i = 0; i < ctx.numPlayers; i++) {
-    // Each player gets a shuffled copy of the entire deck
-    const playerDeck = ctx.random.Shuffle<Card>([...deck]);
+    // Each player gets a copy of the entire deck in order (not shuffled)
+    const playerDeck = [...deck];
     handsPerPlayer.push(playerDeck);
   }
 
