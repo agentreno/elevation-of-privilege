@@ -73,18 +73,10 @@ export function getValidMoves(
   console.log('[DEBUG getValidMoves] currentSuit:', currentSuit);
   console.log('[DEBUG getValidMoves] startingCard:', startingCard);
   console.log('[DEBUG getValidMoves] hand size:', allCardsInHand.length);
-  console.log('[DEBUG getValidMoves] hand includes startingCard:', allCardsInHand.includes(startingCard));
 
-  if (!currentSuit && round <= 1) {
-    console.log('[DEBUG getValidMoves] Returning only starting card');
-    return [startingCard];
-  }
-
-  const cardsOfSuit = getCardsOfSuit(allCardsInHand, currentSuit);
-
-  const result = cardsOfSuit.length > 0 ? cardsOfSuit : allCardsInHand;
-  console.log('[DEBUG getValidMoves] Returning', result.length, 'valid moves');
-  return result;
+  // Allow any card to be played at any time
+  console.log('[DEBUG getValidMoves] Returning all cards as valid moves');
+  return allCardsInHand;
 }
 
 function getCardsOfSuit(cards: Card[], suit: Suit | undefined): Card[] {

@@ -108,14 +108,17 @@ it('makes correct component name', async () => {
 });
 
 it('produces valid moves', async () => {
-  expect(getValidMoves([], '', 0)).toStrictEqual([STARTING_CARD]);
+  // With new rules, any card can be played at any time
+  expect(getValidMoves([], '', 0, STARTING_CARD)).toStrictEqual([]);
 
-  expect(getValidMoves(['T4', 'S2', 'EA', 'T5'], 'T', 10)).toStrictEqual([
+  expect(getValidMoves(['T4', 'S2', 'EA', 'T5'], 'T', 10, STARTING_CARD)).toStrictEqual([
     'T4',
+    'S2',
+    'EA',
     'T5',
   ]);
 
-  expect(getValidMoves(['S2', 'EA'], 'T', 10)).toStrictEqual(['S2', 'EA']);
+  expect(getValidMoves(['S2', 'EA'], 'T', 10, STARTING_CARD)).toStrictEqual(['S2', 'EA']);
 });
 
 it('produces correct type string', async () => {
