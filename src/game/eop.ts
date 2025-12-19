@@ -5,6 +5,7 @@ import {
   deleteThreat,
   draw,
   pass,
+  resetGame,
   selectComponent,
   selectDiagram,
   selectThreat,
@@ -33,6 +34,7 @@ export const ElevationOfPrivilege: Game<GameState, Ctx, SetupData> = {
 
   moves: {
     draw,
+    resetGame,
     selectDiagram,
     selectComponent,
     selectThreat,
@@ -51,6 +53,7 @@ export const ElevationOfPrivilege: Game<GameState, Ctx, SetupData> = {
           addOrUpdateThreat,
           deleteThreat,
           pass,
+          resetGame,
           selectDiagram,
           selectComponent,
           selectThreat,

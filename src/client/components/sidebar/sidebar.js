@@ -8,6 +8,7 @@ import { Button } from 'reactstrap';
 import { getDealtCard } from '../../../utils/utils';
 import Footer from '../footer/footer';
 import { ModelType, SPECTATOR } from '../../../utils/constants';
+import confirm from 'reactstrap-confirm';
 
 class Sidebar extends React.Component {
   static get propTypes() {
@@ -68,6 +69,28 @@ class Sidebar extends React.Component {
         >
           Download Threats
         </DownloadButton>
+        {this.props.playerID && this.props.playerID !== SPECTATOR && (
+          <Button
+            block
+            size="lg"
+            color="danger"
+            onClick={() =>
+              confirm({
+                title: 'Reset Game?',
+                message: 'This will restart the game from the beginning. All progress will be lost. Are you sure?',
+                confirmText: 'Reset Game',
+                confirmColor: 'danger',
+                cancelColor: 'link text-muted',
+              }).then((result) => {
+                if (result) {
+                  this.props.moves.resetGame();
+                }
+              })
+            }
+          >
+            Reset Game
+          </Button>
+        )}
         <hr />
 
         <Leaderboard

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions';
-import { hasPlayerPassed } from './utils';
+import { hasPlayerPassed, setupGame } from './utils';
 
 import type { Ctx } from './context';
 import type { GameState } from './gameState';
@@ -241,6 +241,23 @@ export function addOrUpdateThreat(
     selectedThreat: G.threat.id,
     identifiedThreats,
   };
+}
+
+export function resetGame(
+  G: GameState,
+  ctx: Ctx,
+): GameState {
+  // Extract the start suit from the starting card (first character)
+  const startSuit = G.startingCard.slice(0, 1) as Suit;
+
+  // Reset the game with the same settings
+  return setupGame(ctx, {
+    startSuit,
+    gameMode: G.gameMode,
+    modelType: G.modelType,
+    turnDuration: G.turnDuration,
+    spectatorCredential: '', // Not used during gameplay, only during creation
+  });
 }
 
 export function draw(
