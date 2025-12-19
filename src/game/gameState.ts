@@ -17,7 +17,7 @@ export interface GameState {
   selectedDiagram: number;
   selectedComponent: string;
   selectedThreat: string;
-  threat: Threat;
+  threats: Record<PlayerID, Threat>;
   identifiedThreats: Record<PlayerID, Record<string, Record<string, Threat>>>;
   startingCard: string;
   gameMode: GameMode;

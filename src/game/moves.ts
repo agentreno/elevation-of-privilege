@@ -18,25 +18,30 @@ export function toggleModal(
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
     hasPlayerPassed(G, ctx) ||
-    (G.threat.modal && G.threat.owner !== ctx.playerID) ||
+    ctx.playerID === undefined ||
     G.suit === undefined
   ) {
     return INVALID_MOVE;
   }
   const card = getDealtCard(G);
+  const playerThreat = G.threats[ctx.playerID];
+
   return {
     ...G,
-    threat: {
-      ...G.threat,
-      modal: !G.threat.modal,
-      new: true,
-      owner: ctx.playerID,
-      type: G.suit,
-      id: uuidv4(),
-      title: '',
-      severity: 'Medium',
-      description: getThreatDescription(card, G.gameMode),
-      mitigation: '',
+    threats: {
+      ...G.threats,
+      [ctx.playerID]: {
+        ...playerThreat,
+        modal: !playerThreat.modal,
+        new: true,
+        owner: ctx.playerID,
+        type: G.suit,
+        id: uuidv4(),
+        title: '',
+        severity: 'Medium',
+        description: getThreatDescription(card, G.gameMode),
+        mitigation: '',
+      },
     },
   };
 }
@@ -47,38 +52,56 @@ export function toggleModalUpdate(
   threat: Threat,
 ): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
+  if (
+    hasPlayerPassed(G, ctx) ||
+    threat.owner !== ctx.playerID ||
+    ctx.playerID === undefined
+  ) {
     return INVALID_MOVE;
   }
 
+  const playerThreat = G.threats[ctx.playerID];
+
   return {
     ...G,
-    threat: {
-      ...G.threat,
-      modal: !G.threat.modal,
-      new: false,
-      id: threat.id,
-      owner: ctx.playerID,
-      title: threat.title,
-      type: threat.type,
-      severity: threat.severity,
-      description: threat.description,
-      mitigation: threat.mitigation,
+    threats: {
+      ...G.threats,
+      [ctx.playerID]: {
+        ...playerThreat,
+        modal: !playerThreat.modal,
+        new: false,
+        id: threat.id,
+        owner: ctx.playerID,
+        title: threat.title,
+        type: threat.type,
+        severity: threat.severity,
+        description: threat.description,
+        mitigation: threat.mitigation,
+      },
     },
   };
 }
 
 export function updateThreat<Field extends keyof Threat>(
   G: GameState,
-  _: Ctx,
+  ctx: Ctx,
   field: Field,
   value: Threat[Field],
 ): GameState | typeof INVALID_MOVE {
+  if (ctx.playerID === undefined) {
+    return INVALID_MOVE;
+  }
+
+  const playerThreat = G.threats[ctx.playerID];
+
   return {
     ...G,
-    threat: {
-      ...G.threat,
-      [field]: value,
+    threats: {
+      ...G.threats,
+      [ctx.playerID]: {
+        ...playerThreat,
+        [field]: value,
+      },
     },
   };
 }
@@ -183,16 +206,20 @@ export function addOrUpdateThreat(
   G: GameState,
   ctx: Ctx,
 ): GameState | typeof INVALID_MOVE {
-  const threatTitle = G.threat.title?.trim();
-  const threatDescription = G.threat.description?.trim();
-  const threatMitigation = G.threat.mitigation?.trim();
+  if (ctx.playerID === undefined) {
+    return INVALID_MOVE;
+  }
+
+  const playerThreat = G.threats[ctx.playerID];
+  const threatTitle = playerThreat.title?.trim();
+  const threatDescription = playerThreat.description?.trim();
+  const threatMitigation = playerThreat.mitigation?.trim();
 
   if (
-    ctx.playerID === undefined ||
-    G.threat.owner !== ctx.playerID ||
+    playerThreat.owner !== ctx.playerID ||
     _.isEmpty(threatTitle) ||
     _.isEmpty(threatDescription) ||
-    G.threat.id === undefined
+    playerThreat.id === undefined
   ) {
     return INVALID_MOVE;
   }
@@ -200,7 +227,7 @@ export function addOrUpdateThreat(
   const scores = [...G.scores];
 
   // only update score if it's a new threat
-  if (G.threat.new) {
+  if (playerThreat.new) {
     scores[Number.parseInt(ctx.playerID)]++;
   }
 
@@ -220,12 +247,12 @@ export function addOrUpdateThreat(
 
   //is object.assign required here?
   Object.assign(identifiedThreats[G.selectedDiagram][G.selectedComponent], {
-    [G.threat.id]: {
-      id: G.threat.id,
-      owner: G.threat.owner,
+    [playerThreat.id]: {
+      id: playerThreat.id,
+      owner: playerThreat.owner,
       title: threatTitle,
-      type: G.threat.type,
-      severity: G.threat.severity,
+      type: playerThreat.type,
+      severity: playerThreat.severity,
       description: threatDescription,
       mitigation: threatMitigation || 'No mitigation provided.',
     },
@@ -234,11 +261,14 @@ export function addOrUpdateThreat(
   return {
     ...G,
     scores,
-    threat: {
-      ...G.threat,
-      modal: false,
+    threats: {
+      ...G.threats,
+      [ctx.playerID]: {
+        ...playerThreat,
+        modal: false,
+      },
     },
-    selectedThreat: G.threat.id,
+    selectedThreat: playerThreat.id,
     identifiedThreats,
   };
 }

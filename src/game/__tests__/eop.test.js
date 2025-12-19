@@ -100,13 +100,13 @@ describe('game', () => {
     Object.keys(players).forEach((k) => {
       players[k].moves.toggleModal();
       let state = players['0'].getState();
-      expect(state.G.threat.modal).toBeTruthy();
-      expect(state.G.threat.owner).toBe(k);
+      expect(state.G.threats[k].modal).toBeTruthy();
+      expect(state.G.threats[k].owner).toBe(k);
 
-      // only the owner should be able to toggle the modal again
+      // the player should be able to toggle their own modal again
       players[k].moves.toggleModal();
       state = players['0'].getState();
-      expect(state.G.threat.modal).toBeFalsy();
+      expect(state.G.threats[k].modal).toBeFalsy();
     });
   });
 
@@ -115,7 +115,7 @@ describe('game', () => {
     players['0'].moves.pass();
     players['0'].moves.toggleModal();
     let state = players['0'].getState();
-    expect(state.G.threat.modal).toBeFalsy();
+    expect(state.G.threats['0'].modal).toBeFalsy();
   });
 
   it('the players who have passed should not be able to select a diagram', () => {
@@ -141,7 +141,7 @@ describe('game', () => {
     let state = players['0'].getState();
     let diagram = state.G.selectedDiagram;
     let component = state.G.selectedComponent;
-    createdThreat = state.G.threat.id;
+    createdThreat = state.G.threats['1'].id;
 
     players['1'].moves.updateThreat('title', 'foo');
     players['1'].moves.updateThreat('description', 'bar');
@@ -166,7 +166,7 @@ describe('game', () => {
       mitigation: 'baz',
     });
     let state = players['0'].getState();
-    expect(state.G.threat.new).toBeFalsy();
+    expect(state.G.threats['1'].new).toBeFalsy();
     players['1'].moves.toggleModal();
   });
 

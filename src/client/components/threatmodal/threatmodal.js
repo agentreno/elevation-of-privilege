@@ -37,27 +37,42 @@ class ThreatModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const playerThreat = this.props.playerID
+      ? this.props.G.threats[this.props.playerID]
+      : null;
+    const prevPlayerThreat = prevProps.playerID
+      ? prevProps.G.threats[prevProps.playerID]
+      : null;
+
     if (
-      prevProps.G.threat.title !== this.props.G.threat.title ||
-      prevProps.G.threat.description !== this.props.G.threat.description ||
-      prevProps.G.threat.mitigation !== this.props.G.threat.mitigation
+      playerThreat &&
+      prevPlayerThreat &&
+      (prevPlayerThreat.title !== playerThreat.title ||
+        prevPlayerThreat.description !== playerThreat.description ||
+        prevPlayerThreat.mitigation !== playerThreat.mitigation)
     ) {
       this.setState({
-        title: this.props.G.threat.title,
-        description: this.props.G.threat.description,
-        mitigation: this.props.G.threat.mitigation,
+        title: playerThreat.title,
+        description: playerThreat.description,
+        mitigation: playerThreat.mitigation,
       });
     }
   }
 
   saveThreat() {
+    const playerThreat = this.props.playerID
+      ? this.props.G.threats[this.props.playerID]
+      : null;
+
+    if (!playerThreat) return;
+
     for (let field in ['title', 'description', 'mitigation']) {
-      if (this.props.G.threat[field] !== this.state[field]) {
+      if (playerThreat[field] !== this.state[field]) {
         this.props.moves.updateThreat(field, this.state[field]);
       }
     }
 
-    if (!this.props.G.threat.mitigation) {
+    if (!playerThreat.mitigation) {
       this.props.moves.updateThreat('mitigation', 'No mitigation provided.');
     }
   }
@@ -80,10 +95,19 @@ class ThreatModal extends React.Component {
   }
 
   get isOwner() {
-    return this.props.G.threat.owner === this.props.playerID;
+    const playerThreat = this.props.playerID
+      ? this.props.G.threats[this.props.playerID]
+      : null;
+    return playerThreat && playerThreat.owner === this.props.playerID;
   }
 
   render() {
+    const playerThreat = this.props.playerID
+      ? this.props.G.threats[this.props.playerID]
+      : null;
+
+    if (!playerThreat) return null;
+
     return (
       <Modal isOpen={this.props.isOpen}>
         <Form>
@@ -93,10 +117,10 @@ class ThreatModal extends React.Component {
             }
             style={{ width: '100%' }}
           >
-            {this.props.G.threat.new ? 'Add' : 'Update'} Threat &mdash;{' '}
+            {playerThreat.new ? 'Add' : 'Update'} Threat &mdash;{' '}
             <small className="text-muted">
-              being {this.props.G.threat.new ? 'added' : 'updated'} by{' '}
-              {this.props.names[this.props.G.threat.owner]}
+              being {playerThreat.new ? 'added' : 'updated'} by{' '}
+              {this.props.names[playerThreat.owner]}
             </small>
           </ModalHeader>
           <ModalBody>
@@ -122,7 +146,7 @@ class ThreatModal extends React.Component {
                 name="type"
                 id="type"
                 disabled={!this.isOwner}
-                value={this.props.G.threat.type}
+                value={playerThreat.type}
                 onChange={(e) =>
                   this.props.moves.updateThreat('type', e.target.value)
                 }
@@ -141,7 +165,7 @@ class ThreatModal extends React.Component {
                 name="severity"
                 id="severity"
                 disabled={!this.isOwner}
-                value={this.props.G.threat.severity}
+                value={playerThreat.severity}
                 onChange={(e) =>
                   this.props.moves.updateThreat('severity', e.target.value)
                 }

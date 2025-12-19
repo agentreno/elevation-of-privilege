@@ -284,7 +284,12 @@ class Threatbar extends React.Component {
           </CardBody>
         </Card>
         <ThreatModal
-          isOpen={this.props.G.threat.modal}
+          isOpen={
+            this.props.playerID &&
+            this.props.G.threats[this.props.playerID]
+              ? this.props.G.threats[this.props.playerID].modal
+              : false
+          }
           G={this.props.G}
           ctx={this.props.ctx}
           playerID={this.props.playerID}

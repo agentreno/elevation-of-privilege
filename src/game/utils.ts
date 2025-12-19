@@ -36,6 +36,15 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const scores = new Array(ctx.numPlayers).fill(0);
   const handsPerPlayers = shuffleCards(ctx, deck, startingCard);
 
+  // Initialize a threat object for each player
+  const threats: Record<PlayerID, { modal: boolean; new: boolean }> = {};
+  for (let i = 0; i < ctx.numPlayers; i++) {
+    threats[i.toString()] = {
+      modal: false,
+      new: true,
+    };
+  }
+
   return {
     dealt: [],
     passed: [],
@@ -54,10 +63,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
     // as image models don't have components, put a dummy id here to treat the entire image as selected
     selectedComponent: modelType === ModelType.IMAGE ? 'image' : '',
     selectedThreat: '',
-    threat: {
-      modal: false,
-      new: true,
-    },
+    threats,
     identifiedThreats: {},
     startingCard: startingCard,
     gameMode: gameMode,
