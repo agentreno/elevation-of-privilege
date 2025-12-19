@@ -69,13 +69,22 @@ export function getValidMoves(
   round: number,
   startingCard: Card,
 ): Card[] {
+  console.log('[DEBUG getValidMoves] round:', round);
+  console.log('[DEBUG getValidMoves] currentSuit:', currentSuit);
+  console.log('[DEBUG getValidMoves] startingCard:', startingCard);
+  console.log('[DEBUG getValidMoves] hand size:', allCardsInHand.length);
+  console.log('[DEBUG getValidMoves] hand includes startingCard:', allCardsInHand.includes(startingCard));
+
   if (!currentSuit && round <= 1) {
+    console.log('[DEBUG getValidMoves] Returning only starting card');
     return [startingCard];
   }
 
   const cardsOfSuit = getCardsOfSuit(allCardsInHand, currentSuit);
 
-  return cardsOfSuit.length > 0 ? cardsOfSuit : allCardsInHand;
+  const result = cardsOfSuit.length > 0 ? cardsOfSuit : allCardsInHand;
+  console.log('[DEBUG getValidMoves] Returning', result.length, 'valid moves');
+  return result;
 }
 
 function getCardsOfSuit(cards: Card[], suit: Suit | undefined): Card[] {

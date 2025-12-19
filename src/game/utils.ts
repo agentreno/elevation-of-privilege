@@ -27,6 +27,12 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const deck = getAllCards(gameMode);
   const startingCard = getStartingCard(gameMode, startSuit);
 
+  console.log('[DEBUG setupGame] gameMode:', gameMode);
+  console.log('[DEBUG setupGame] startSuit:', startSuit);
+  console.log('[DEBUG setupGame] startingCard:', startingCard);
+  console.log('[DEBUG setupGame] deck length:', deck.length);
+  console.log('[DEBUG setupGame] deck includes startingCard:', deck.includes(startingCard));
+
   const scores = new Array(ctx.numPlayers).fill(0);
   const handsPerPlayers = shuffleCards(ctx, deck, startingCard);
 
