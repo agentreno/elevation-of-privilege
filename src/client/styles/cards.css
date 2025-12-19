@@ -165,20 +165,12 @@
 }
 
 .playingCards ul.table,
+.playingCards ul.hand,
 .playingCards ul.deck {
     list-style-type: none;
     padding: 0;
     margin: 0 0 1.5em 0;
     position: relative;
-}
-
-.playingCards ul.hand {
-    list-style-type: none;
-    padding: 0;
-    margin: 0 0 1.5em 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 }
 .playingCards ul.table li,
 .playingCards ul.hand li,
@@ -186,16 +178,90 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-}
-
-.playingCards ul.hand li {
-    flex-shrink: 0;
-    display: inline-block;
-}
-
-.playingCards ul.deck li {
-    position: absolute;
-    display: inline-block;
     float: left;
 }
 
+.playingCards ul.hand li,
+.playingCards ul.deck li {
+    position: absolute;
+    display: inline-block;
+}
+
+.playingCards ul.hand li:nth-child(1) { left: 0.0em; }
+.playingCards ul.hand li:nth-child(2) { left: 1.2em; }
+.playingCards ul.hand li:nth-child(3) { left: 2.4em; }
+.playingCards ul.hand li:nth-child(4) { left: 3.5999999999999996em; }
+.playingCards ul.hand li:nth-child(5) { left: 4.8em; }
+.playingCards ul.hand li:nth-child(6) { left: 6.0em; }
+.playingCards ul.hand li:nth-child(7) { left: 7.199999999999999em; }
+.playingCards ul.hand li:nth-child(8) { left: 8.4em; }
+.playingCards ul.hand li:nth-child(9) { left: 9.6em; }
+.playingCards ul.hand li:nth-child(10) { left: 10.799999999999999em; }
+.playingCards ul.hand li:nth-child(11) { left: 12.0em; }
+.playingCards ul.hand li:nth-child(12) { left: 13.2em; }
+.playingCards ul.hand li:nth-child(13) { left: 14.399999999999999em; }
+.playingCards ul.hand li:nth-child(14) { left: 15.6em; }
+.playingCards ul.hand li:nth-child(15) { left: 16.8em; }
+.playingCards ul.hand li:nth-child(16) { left: 18.0em; }
+.playingCards ul.hand li:nth-child(17) { left: 19.2em; }
+.playingCards ul.hand li:nth-child(18) { left: 20.4em; }
+.playingCards ul.hand li:nth-child(19) { left: 21.599999999999998em; }
+.playingCards ul.hand li:nth-child(20) { left: 22.8em; }
+.playingCards ul.hand li:nth-child(21) { left: 24.0em; }
+.playingCards ul.hand li:nth-child(22) { left: 25.2em; }
+.playingCards ul.hand li:nth-child(23) { left: 26.4em; }
+.playingCards ul.hand li:nth-child(24) { left: 27.599999999999998em; }
+.playingCards ul.hand li:nth-child(25) { left: 28.799999999999997em; }
+.playingCards ul.hand li:nth-child(26) { left: 30.0em; }
+.playingCards ul.hand li:nth-child(27) { left: 31.2em; }
+.playingCards ul.hand li:nth-child(28) { left: 32.4em; }
+.playingCards ul.hand li:nth-child(29) { left: 33.6em; }
+.playingCards ul.hand li:nth-child(30) { left: 34.8em; }
+.playingCards ul.hand li:nth-child(31) { left: 36.0em; }
+.playingCards ul.hand li:nth-child(32) { left: 37.199999999999996em; }
+.playingCards ul.hand li:nth-child(33) { left: 38.4em; }
+.playingCards ul.hand li:nth-child(34) { left: 39.6em; }
+.playingCards ul.hand li:nth-child(35) { left: 40.8em; }
+.playingCards ul.hand li:nth-child(36) { left: 42.0em; }
+.playingCards ul.hand li:nth-child(37) { left: 43.199999999999996em; }
+.playingCards ul.hand li:nth-child(38) { left: 44.4em; }
+.playingCards ul.hand li:nth-child(39) { left: 45.6em; }
+.playingCards ul.hand li:nth-child(40) { left: 46.8em; }
+.playingCards ul.hand li:nth-child(41) { left: 48.0em; }
+.playingCards ul.hand li:nth-child(42) { left: 49.199999999999996em; }
+.playingCards ul.hand li:nth-child(43) { left: 50.4em; }
+.playingCards ul.hand li:nth-child(44) { left: 51.6em; }
+.playingCards ul.hand li:nth-child(45) { left: 52.8em; }
+.playingCards ul.hand li:nth-child(46) { left: 54.0em; }
+.playingCards ul.hand li:nth-child(47) { left: 55.199999999999996em; }
+.playingCards ul.hand li:nth-child(48) { left: 56.4em; }
+.playingCards ul.hand li:nth-child(49) { left: 57.599999999999994em; }
+.playingCards ul.hand li:nth-child(50) { left: 58.8em; }
+.playingCards ul.hand li:nth-child(51) { left: 60.0em; }
+.playingCards ul.hand li:nth-child(52) { left: 61.199999999999996em; }
+.playingCards ul.hand li:nth-child(53) { left: 62.4em; }
+.playingCards ul.hand li:nth-child(54) { left: 63.599999999999994em; }
+.playingCards ul.hand li:nth-child(55) { left: 64.8em; }
+.playingCards ul.hand li:nth-child(56) { left: 66.0em; }
+.playingCards ul.hand li:nth-child(57) { left: 67.2em; }
+.playingCards ul.hand li:nth-child(58) { left: 68.39999999999999em; }
+.playingCards ul.hand li:nth-child(59) { left: 69.6em; }
+.playingCards ul.hand li:nth-child(60) { left: 70.8em; }
+.playingCards ul.hand li:nth-child(61) { left: 72.0em; }
+.playingCards ul.hand li:nth-child(62) { left: 73.2em; }
+.playingCards ul.hand li:nth-child(63) { left: 74.39999999999999em; }
+.playingCards ul.hand li:nth-child(64) { left: 75.6em; }
+.playingCards ul.hand li:nth-child(65) { left: 76.8em; }
+.playingCards ul.hand li:nth-child(66) { left: 78.0em; }
+.playingCards ul.hand li:nth-child(67) { left: 79.2em; }
+.playingCards ul.hand li:nth-child(68) { left: 80.39999999999999em; }
+.playingCards ul.hand li:nth-child(69) { left: 81.6em; }
+.playingCards ul.hand li:nth-child(70) { left: 82.8em; }
+.playingCards ul.hand li:nth-child(71) { left: 84.0em; }
+.playingCards ul.hand li:nth-child(72) { left: 85.2em; }
+.playingCards ul.hand li:nth-child(73) { left: 86.39999999999999em; }
+.playingCards ul.hand li:nth-child(74) { left: 87.6em; }
+.playingCards ul.hand li:nth-child(75) { left: 88.8em; }
+.playingCards ul.hand li:nth-child(76) { left: 90.0em; }
+.playingCards ul.hand li:nth-child(77) { left: 91.2em; }
+.playingCards ul.hand li:nth-child(78) { left: 92.39999999999999em; }
