@@ -34,6 +34,9 @@ class Deck extends React.Component {
     console.log('[DEBUG deck] isInThreatStage:', this.props.isInThreatStage);
     console.log('[DEBUG deck] startingCard:', this.props.startingCard);
     console.log('[DEBUG deck] round:', this.props.round);
+    console.log('[DEBUG deck] cards in hand:', left.length, 'cards');
+    console.log('[DEBUG deck] first 20 cards:', left.slice(0, 20).join(', '));
+    console.log('[DEBUG deck] last 10 cards:', left.slice(-10).join(', '));
 
     if (
       this.props.current &&
