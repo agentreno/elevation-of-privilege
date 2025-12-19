@@ -29,44 +29,43 @@ class Deck extends React.Component {
     let suit = this.props.suit;
     let validMoves = [];
 
-    console.log('[DEBUG deck] current:', this.props.current);
-    console.log('[DEBUG deck] active:', this.props.active);
-    console.log('[DEBUG deck] isInThreatStage:', this.props.isInThreatStage);
-    console.log('[DEBUG deck] startingCard:', this.props.startingCard);
-    console.log('[DEBUG deck] round:', this.props.round);
-    console.log('[DEBUG deck] cards in hand:', left.length, 'cards');
-    console.log('[DEBUG deck] first 20 cards:', left.slice(0, 20).join(', '));
-    console.log('[DEBUG deck] last 10 cards:', left.slice(-10).join(', '));
+    console.log('[DEBUG deck] Total cards to render:', left.length);
 
     if (
       this.props.current &&
       this.props.active &&
       !this.props.isInThreatStage
     ) {
-      console.log('[DEBUG deck] Calculating valid moves...');
       validMoves = getValidMoves(
         left,
         suit,
         this.props.round,
         this.props.startingCard,
       );
-      console.log('[DEBUG deck] validMoves:', validMoves);
-    } else {
-      console.log('[DEBUG deck] NOT calculating valid moves - conditions not met');
+      console.log('[DEBUG deck] validMoves count:', validMoves.length);
     }
 
-    let deck = left.map((e) => (
-      <li
-        key={e}
-        className={` playing-card ${
-          isGameModeCornucopia(this.props.gameMode)
-            ? `cornucopiacard ccard${e.toLowerCase()}`
-            : `card${e.toLowerCase()}`
-        } ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`}
-        onClick={() => this.props.onCardSelect(e)}
-      />
-    ));
+    let deck = left.map((e, index) => {
+      const cardClass = isGameModeCornucopia(this.props.gameMode)
+        ? `cornucopiacard ccard${e.toLowerCase()}`
+        : `card${e.toLowerCase()}`;
+      const isValid = validMoves.includes(e);
 
+      // Log first few and last few cards being rendered
+      if (index < 5 || index >= left.length - 5) {
+        console.log(`[DEBUG deck] Rendering card ${index + 1}/${left.length}: ${e} -> class="${cardClass}" valid=${isValid}`);
+      }
+
+      return (
+        <li
+          key={e}
+          className={` playing-card ${cardClass} ${isValid ? 'active' : ''} card-rounded scaled`}
+          onClick={() => this.props.onCardSelect(e)}
+        />
+      );
+    });
+
+    console.log('[DEBUG deck] Created', deck.length, 'card elements');
     return <ul className="hand">{deck}</ul>;
   }
 
