@@ -29,17 +29,27 @@ class Deck extends React.Component {
     let suit = this.props.suit;
     let validMoves = [];
 
+    console.log('[DEBUG deck] current:', this.props.current);
+    console.log('[DEBUG deck] active:', this.props.active);
+    console.log('[DEBUG deck] isInThreatStage:', this.props.isInThreatStage);
+    console.log('[DEBUG deck] startingCard:', this.props.startingCard);
+    console.log('[DEBUG deck] round:', this.props.round);
+
     if (
       this.props.current &&
       this.props.active &&
       !this.props.isInThreatStage
     ) {
+      console.log('[DEBUG deck] Calculating valid moves...');
       validMoves = getValidMoves(
         left,
         suit,
         this.props.round,
         this.props.startingCard,
       );
+      console.log('[DEBUG deck] validMoves:', validMoves);
+    } else {
+      console.log('[DEBUG deck] NOT calculating valid moves - conditions not met');
     }
 
     let deck = left.map((e) => (
