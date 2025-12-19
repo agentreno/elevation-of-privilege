@@ -1,20 +1,20 @@
-.carda10, .carda2, .carda3, .carda4, .carda5, 
-.carda6, .carda7, .carda8, .carda9, .cardaa, 
-.cardaj, .cardak, .cardaq, .cardt10, .cardt2, .cardt3, .cardt4, .cardt5, 
-.cardt6, .cardt7, .cardt8, .cardt9, .cardta, 
-.cardtj, .cardtk, .cardtq, .cardb10, .cardb2, 
-.cardb3, .cardb4, .cardb5, .cardb6, .cardb7, 
-.cardb8, .cardb9, .cardba, .cardbj, .cardbk, 
-.cardbq, .cardc10, .cardc2, .cardc3, .cardc4, 
-.cardc5, .cardc6, .cardc7, .cardc8, .cardc9, 
-.cardca, .cardcj, .cardck, .cardcq, .cardd10, 
-.cardd2, .cardd3, .cardd4, .cardd5, .cardd6, 
-.cardd7, .cardd8, .cardd9, .cardda, .carddj, 
-.carddk, .carddq, .carde10,.carde2, .carde3, .carde4, 
-.carde5, .carde6, .carde7, .carde8, .carde9, 
+.carda10, .carda2, .carda3, .carda4, .carda5,
+.carda6, .carda7, .carda8, .carda9, .cardaa,
+.cardaj, .cardak, .cardaq, .cardt10, .cardt2, .cardt3, .cardt4, .cardt5,
+.cardt6, .cardt7, .cardt8, .cardt9, .cardta,
+.cardtj, .cardtk, .cardtq, .cardb10, .cardb2,
+.cardb3, .cardb4, .cardb5, .cardb6, .cardb7,
+.cardb8, .cardb9, .cardba, .cardbj, .cardbk,
+.cardbq, .cardc10, .cardc2, .cardc3, .cardc4,
+.cardc5, .cardc6, .cardc7, .cardc8, .cardc9,
+.cardca, .cardcj, .cardck, .cardcq, .cardd10,
+.cardd2, .cardd3, .cardd4, .cardd5, .cardd6,
+.cardd7, .cardd8, .cardd9, .cardda, .carddj,
+.carddk, .carddq, .carde10,.carde2, .carde3, .carde4,
+.carde5, .carde6, .carde7, .carde8, .carde9,
 .cardea, .cardej, .cardek, .cardeq
 { display: inline-block; background: url('cards.jpg') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
- 
+
 .carda10 { background-position: -5px -0px; width: 300px; height: 518px; }
 .carda2 { background-position: -310px -0px; width: 300px; height: 518px; }
 .carda3 { background-position: -615px -0px; width: 300px; height: 518px; }
@@ -115,7 +115,7 @@
 .playingCardsContainer {
     position: fixed;
     bottom: 0;
-    border-top: 4px double #ccc; 
+    border-top: 4px double #ccc;
 
     background-image: radial-gradient(#ccc 20%, transparent 20%), radial-gradient(#fafafa 20%, transparent 20%);
     background-color: #eaeaea;
@@ -180,6 +180,30 @@
     padding: 0;
     list-style-type: none;
     float: left;
+}
+
+/* 2 row grid position addition */
+.playingCards ul.hand li:not(:first-child) {
+    margin-left: -265px;
+    margin-bottom: -200px; /* optional overlap */
+}
+
+.playingCards ul.hand {
+    display: grid;
+    grid-template-rows: repeat(2, 250px);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 1rem;
+}
+
+.playingCards ul.hand li {
+    position: static !important;
+    left: auto !important;
+    float: none !important;
+}
+
+.playingCards ul.hand li:hover {
+  z-index: 100 !important;
 }
 
 .playingCards ul.hand li,
